@@ -85,3 +85,16 @@ func (s *TaskService) FindTasks(
 	}
 	return &pbTask.FindTasksResponse{Tasks: tasks}, nil
 }
+
+func (s *TaskService) FindProjectTasks(
+	ctx context.Context,
+	req *pbTask.FindProjectTasksRequest,
+) (*pbTask.FindProjectTasksResponse, error) {
+	// TODO Placeholder ID
+	userID := uint64(1)
+	tasks, err := s.store.FindProjectTasks(req.GetProjectId(), userID)
+	if err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+	return &pbTask.FindProjectTasksResponse{Tasks: tasks}, nil
+}
