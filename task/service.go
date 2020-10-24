@@ -8,6 +8,7 @@ import (
 	pbActivity "github.com/homma509/9task/proto/activity"
 	pbProject "github.com/homma509/9task/proto/project"
 	pbTask "github.com/homma509/9task/proto/task"
+	"github.com/homma509/9task/shared/md"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -35,8 +36,8 @@ func (s *TaskService) CreateTask(
 		return nil, status.Error(
 			codes.NotFound, err.Error())
 	}
-	// TODO Placeholder ID
-	userID := uint64(1)
+	// メタデータからUserIDを取得する
+	userID := md.GetUserIDFromContext(ctx)
 	now := ptypes.TimestampNow()
 	task, err := s.store.CreateTask(&pbTask.Task{
 		Name:      req.GetName(),
@@ -76,8 +77,8 @@ func (s *TaskService) FindTasks(
 	ctx context.Context,
 	_ *empty.Empty,
 ) (*pbTask.FindTasksResponse, error) {
-	// TODO Placeholder ID
-	userID := uint64(1)
+	// メタデータからUserIDを取得する
+	userID := md.GetUserIDFromContext(ctx)
 	tasks, err := s.store.FindTasks(userID)
 	if err != nil {
 		return nil, status.Error(
@@ -91,8 +92,8 @@ func (s *TaskService) FindProjectTasks(
 	ctx context.Context,
 	req *pbTask.FindProjectTasksRequest,
 ) (*pbTask.FindProjectTasksResponse, error) {
-	// TODO Placeholder ID
-	userID := uint64(1)
+	// メタデータからUserIDを取得する
+	userID := md.GetUserIDFromContext(ctx)
 	tasks, err := s.store.FindProjectTasks(req.GetProjectId(), userID)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, err.Error())
@@ -115,8 +116,8 @@ func (s *TaskService) UpdateTask(
 			codes.InvalidArgument,
 			"unknown task status")
 	}
-	// TODO Placeholder ID
-	userID := uint64(1)
+	// メタデータからUserIDを取得する
+	userID := md.GetUserIDFromContext(ctx)
 	task, err := s.store.FindTask(req.GetTaskId(), userID)
 	if err != nil {
 		return nil, status.Error(
