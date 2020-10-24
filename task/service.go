@@ -146,8 +146,7 @@ func (s *TaskService) UpdateTask(
 	}
 	if _, err := s.activityClient.CreateActivity(ctx,
 		&pbActivity.CreateActivityRequest{Content: any}); err != nil {
-			return nil, err
-		}
-	)
+		return nil, err
+	}
 	return &pbTask.UpdateTaskResponse{Task: updatedTask}, nil
 }
