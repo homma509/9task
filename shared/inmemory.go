@@ -37,7 +37,7 @@ func (m *IndexMap) Get(idx uint64) (value interface{}, ok bool) {
 	return v, ok
 }
 
-// Range
+// Range 結果がfalseになるまで各要素に関数を実行
 func (m *IndexMap) Range(f func(idx uint64, value interface{}) bool) {
 	m.lock.Lock()
 	for k, v := range m.items {

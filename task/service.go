@@ -86,6 +86,7 @@ func (s *TaskService) FindTasks(
 	return &pbTask.FindTasksResponse{Tasks: tasks}, nil
 }
 
+// FindProjectTasks プロジェクトに関連するタスクの検索
 func (s *TaskService) FindProjectTasks(
 	ctx context.Context,
 	req *pbTask.FindProjectTasksRequest,
@@ -99,6 +100,7 @@ func (s *TaskService) FindProjectTasks(
 	return &pbTask.FindProjectTasksResponse{Tasks: tasks}, nil
 }
 
+// UpdateTask タスクの更新
 func (s *TaskService) UpdateTask(
 	ctx context.Context,
 	req *pbTask.UpdateTaskRequest,
